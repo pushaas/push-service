@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  push-redis:
+    image: rafaeleyng/push-redis
+    ports:
+      - "6390:6379"
+
+  push-stream:
+    image: rafaeleyng/push-stream
+    ports:
+      - "9090:9080"
+
+  push-agent:
+    image: rafaeleyng/push-agent
+    depends_on:
+      - push-redis
+      - push-stream
+    environment:
+      PUSHAGENT_REDIS__URL: "redis://push-redis:6379"
+      PUSHAGENT_PUSH_STREAM__URL: "http://push-stream:9080"
