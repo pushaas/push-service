@@ -19,3 +19,14 @@ services:
     environment:
       PUSHAGENT_REDIS__URL: "redis://push-redis:6379"
       PUSHAGENT_PUSH_STREAM__URL: "http://push-stream:9080"
+
+  push-api:
+    image: rafaeleyng/push-api
+    ports:
+      - "8090:8080"
+    depends_on:
+      - push-redis
+      - push-stream
+    environment:
+      PUSHAPI_REDIS__URL: "redis://push-redis:6379"
+      PUSHAPI_PUSH_STREAM__URL: "http://push-stream:9080"
