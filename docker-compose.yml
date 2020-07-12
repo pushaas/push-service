@@ -2,17 +2,17 @@ version: '3.7'
 
 services:
   push-redis:
-    image: rafaeleyng/push-redis
+    image: pushaas/push-redis:1
     ports:
-      - "6390:6379"
+      - "6379:6379"
 
   push-stream:
-    image: rafaeleyng/push-stream
+    image: pushaas/push-stream:1
     ports:
-      - "9090:9080"
+      - "9080:9080"
 
   push-agent:
-    image: rafaeleyng/push-agent
+    image: pushaas/push-agent:1
     depends_on:
       - push-redis
       - push-stream
@@ -21,9 +21,9 @@ services:
       PUSHAGENT_PUSH_STREAM__URL: "http://push-stream:9080"
 
   push-api:
-    image: rafaeleyng/push-api
+    image: pushaas/push-api:1
     ports:
-      - "8090:8080"
+      - "8080:8080"
     depends_on:
       - push-redis
       - push-stream
